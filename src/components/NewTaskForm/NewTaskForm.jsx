@@ -2,19 +2,18 @@ import React from 'react'
 
 import './NewTaskForm.scss'
 
-const TaskInput = ({addTodo}) => {
+const TaskInput = ({ className, placeholder, submit }) => {
   const [fieldValue, setFieldValue] = React.useState('')
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault()
-        addTodo(fieldValue)
-        setFieldValue('')
+        submit(fieldValue, setFieldValue)
       }}
     >
       <input
-        className="new-todo"
-        placeholder="What needs to be done?"
+        className={className}
+        placeholder={placeholder}
         autoFocus
         value={fieldValue}
         onChange={(e) => setFieldValue(e.target.value)}

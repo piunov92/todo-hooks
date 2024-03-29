@@ -5,7 +5,6 @@ import TaskList from './components/TaskList/TaskList'
 const App = () => {
   const [data, setData] = React.useState([])
 
-  //new task
   const newTodo = (text) => {
     const newTodo = {
       id: Math.random().toString(16).slice(2),
@@ -15,20 +14,34 @@ const App = () => {
     setData([...data, newTodo])
   }
 
-  //delete task
   const destroyTodo = (id) => {
     setData(data.filter((item) => item.id !== id))
   }
 
-  
+  const editTodo = (id, text) => {
+    setData(
+      data.map((todo) => ({
+        ...todo,
+        text: todo.id === id ? text : todo.text,
+      }))
+    )
+  }
+
   return (
     <section className="todoapp">
       <header className="header">
         <h1>todos</h1>
-        <TaskInput addTodo={newTodo} />
+        <TaskInput
+          className={'new-todo'}
+          placeholder={'What needs to be done?'}
+          submit={(state, setState) => {
+            newTodo(state)
+            setState('')
+          }}
+        />
       </header>
       <section className="main">
-        <TaskList todos={data} taskDestroy={destroyTodo} />
+        <TaskList todos={data} taskDestroy={destroyTodo} taskEdit={editTodo} />
       </section>
     </section>
   )
