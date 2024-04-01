@@ -1,9 +1,10 @@
 import React from 'react'
 import TaskInput from '../NewTaskForm/NewTaskForm'
+import { formatDistanceToNow } from 'date-fns'
 
 import './Task.scss'
 
-const Task = ({ todoText, taskDestroy, taskEdit, taskDone, isDone }) => {
+const Task = ({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) => {
   const [isEditing, setEdited] = React.useState(false)
 
   return (
@@ -19,7 +20,10 @@ const Task = ({ todoText, taskDestroy, taskEdit, taskDone, isDone }) => {
           <span onClick={taskDone} className="description">
             {todoText}
           </span>
-          <span className="created">created 5 minutes ago</span>
+          <span className="created">{`created ${formatDistanceToNow(date, {
+            includeSeconds: true,
+            addSuffix: true,
+          })}`}</span>
         </label>
         <button
           className="icon icon-edit"

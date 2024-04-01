@@ -7,13 +7,13 @@ import TaskFilter from './components/TasksFilter/TaskFilter'
 const App = () => {
   const [data, setData] = React.useState([])
   const [todoCount, setTodoCount] = React.useState(0)
-
-  console.log(data)
+  const [filter, setFilter] = React.useState('All')
 
   const newTodo = (text) => {
     const newTodo = {
       id: Math.random().toString(16).slice(2),
       isDone: false,
+      date: new Date(),
       text,
     }
     setTodoCount(todoCount + 1)
@@ -22,7 +22,7 @@ const App = () => {
 
   const destroyTodo = (id) => {
     setTodoCount(todoCount - 1)
-    setData(data.filter((item) => item.id !== id))
+    setData(data.filter((todo) => todo.id !== id))
   }
 
   const editTodo = (id, text) => {
@@ -55,9 +55,17 @@ const App = () => {
     })
   }
 
-  const isDone = () => {}
+  const filteredTodo = () => {
+    return data.filter(({ isDone }) => {
+      const all = filter === 'All'
+      const completed = filter === 'Completed'
+      return all ? true : completed ? isDone === true : isDone === false
+    })
+  }
 
-  const isActive = () => {}
+  const onChangeFilter = (filterStatus) => {
+    setFilter(filterStatus)
+  }
 
   return (
     <section className="todoapp">
@@ -75,13 +83,13 @@ const App = () => {
       </header>
       <section className="main">
         <TaskList
-          todos={data}
+          todos={filteredTodo()}
           taskDestroy={destroyTodo}
           taskEdit={editTodo}
           taskDone={doneTodo}
         />
         <Footer counter={todoCount} clearDone={clearDone}>
-          <TaskFilter completed={isDone} active={isActive} />
+          <TaskFilter filter={filter} onChangeFilter={onChangeFilter} />
         </Footer>
       </section>
     </section>

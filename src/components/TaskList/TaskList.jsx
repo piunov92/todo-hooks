@@ -12,6 +12,7 @@ const TaskList = ({ todos, taskDestroy, taskEdit, taskDone }) => {
       taskEdit={(text) => taskEdit(todo.id, text)}
       isDone={todo.isDone}
       taskDone={() => taskDone(todo.id)}
+      date={todo.date}
     />
   ))
 
