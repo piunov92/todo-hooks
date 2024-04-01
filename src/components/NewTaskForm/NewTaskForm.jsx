@@ -2,8 +2,8 @@ import React from 'react'
 
 import './NewTaskForm.scss'
 
-const TaskInput = ({ className, placeholder, submit }) => {
-  const [fieldValue, setFieldValue] = React.useState('')
+const TaskInput = ({ className, placeholder = null, value, submit }) => {
+  const [fieldValue, setFieldValue] = React.useState(value)
   return (
     <form
       onSubmit={(e) => {

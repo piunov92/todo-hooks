@@ -3,24 +3,20 @@ import TaskInput from '../NewTaskForm/NewTaskForm'
 
 import './Task.scss'
 
-const Task = ({ todoText, taskDestroy, taskEdit }) => {
-  const [isCompleted, setCompleted] = React.useState(false)
+const Task = ({ todoText, taskDestroy, taskEdit, taskDone, isDone }) => {
   const [isEditing, setEdited] = React.useState(false)
 
   return (
-    <li className={isCompleted ? 'completed' : isEditing ? 'editing' : null}>
+    <li className={isDone ? 'completed' : isEditing ? 'editing' : null}>
       <div className="view">
         <input
           className="toggle"
           type="checkbox"
-          checked={isCompleted}
-          onChange={() => setCompleted(!isCompleted)}
+          checked={isDone}
+          onChange={taskDone}
         />
         <label>
-          <span
-            onClick={() => setCompleted(!isCompleted)}
-            className="description"
-          >
+          <span onClick={taskDone} className="description">
             {todoText}
           </span>
           <span className="created">created 5 minutes ago</span>
@@ -34,7 +30,7 @@ const Task = ({ todoText, taskDestroy, taskEdit }) => {
       {isEditing && (
         <TaskInput
           className={'edit'}
-          placeholder={''}
+          value={todoText}
           submit={(state, setState) => {
             taskEdit(state)
             setState('')
