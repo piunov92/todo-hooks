@@ -24,7 +24,8 @@
   },
   "lint-staged": {
     "*.(js|jsx)": [
-      "yarn run lint",
+      "yarn lint",
+      "format",
       "git add"
     ]
   },
