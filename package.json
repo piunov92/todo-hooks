@@ -10,6 +10,14 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(js|jsx)": ["yarn run format", "git add"]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
