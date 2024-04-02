@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import { formatDistanceToNow } from 'date-fns'
 import PropTypes from 'prop-types'
@@ -17,8 +18,8 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
           checked={isDone}
           onChange={taskDone}
         />
-        <label>
-          <span onClick={taskDone} className='description'>
+        <label htmlFor='task'>
+          <span onChange={taskDone} className='description'>
             {todoText}
           </span>
           <span className='created'>
@@ -28,8 +29,16 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
             })}`}
           </span>
         </label>
-        <button className='icon icon-edit' onClick={() => setEdited(true)} />
-        <button className='icon icon-destroy' onClick={taskDestroy} />
+        <button
+          className='icon icon-edit'
+          onClick={() => setEdited(true)}
+          type='button'
+        />
+        <button
+          className='icon icon-destroy'
+          onClick={taskDestroy}
+          type='button'
+        />
       </div>
       {isEditing && (
         <TaskInput
@@ -46,7 +55,7 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
   )
 }
 
-Task.propTypes = {
+Task.propsTypes = {
   todoText: PropTypes.string,
   date: PropTypes.instanceOf(Date),
   taskDestroy: PropTypes.func,

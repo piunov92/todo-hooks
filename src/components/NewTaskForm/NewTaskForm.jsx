@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './NewTaskForm.scss'
 
-const TaskInput = ({ className, placeholder, value, submit }) => {
+function TaskInput({ className, placeholder, value, submit }) {
   const [fieldValue, setFieldValue] = React.useState(value)
 
   return (
@@ -16,6 +16,7 @@ const TaskInput = ({ className, placeholder, value, submit }) => {
       <input
         className={className}
         placeholder={placeholder}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus
         value={fieldValue}
         onChange={(e) => setFieldValue(e.target.value)}
@@ -24,7 +25,7 @@ const TaskInput = ({ className, placeholder, value, submit }) => {
   )
 }
 
-TaskInput.propTypes = {
+TaskInput.propsTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,
@@ -32,7 +33,7 @@ TaskInput.propTypes = {
 }
 
 TaskInput.defaultTypes = {
-  placeholder: null,
+  placeholder: '',
 }
 
 export default TaskInput

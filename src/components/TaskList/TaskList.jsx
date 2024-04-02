@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import PropTypes from 'prop-types'
 import Task from '../Task/Task'
 
@@ -21,12 +21,18 @@ function TaskList({ todos, taskDestroy, taskEdit, taskDone }) {
 }
 
 TaskList.propsTypes = {
-  todos: PropTypes.shape({
-    id: PropTypes.string,
-    isDone: PropTypes.bool,
-    date: PropTypes.instanceOf(Date),
-    text: PropTypes.string,
-  }),
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      isDone: PropTypes.bool,
+      date: PropTypes.instanceOf(Date),
+      text: PropTypes.string,
+    }),
+  ),
+}
+
+TaskList.defaultProps = {
+  todos: {},
 }
 
 export default TaskList
