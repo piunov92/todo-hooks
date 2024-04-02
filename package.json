@@ -16,7 +16,7 @@
     }
   },
   "lint-staged": {
-    "*.(js|jsx)": ["yarn format", "git add"]
+    "*.(js|jsx)": ["yarn lint:fix", "git add"]
   },
   "scripts": {
     "start": "react-scripts start",
