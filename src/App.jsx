@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import TaskInput from './components/NewTaskForm/NewTaskForm';
 import TaskList from './components/TaskList/TaskList';
 import Footer from './components/Footer/Footer';
