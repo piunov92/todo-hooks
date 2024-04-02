@@ -23,7 +23,7 @@
     }
   },
   "lint-staged": {
-    "*.(js|jsx)": ["yarn lint", "git add"]
+    "*.(js|jsx)": ["yarn run lint", "git add"]
   },
   "browserslist": {
     "production": [
