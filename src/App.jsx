@@ -1,7 +1,7 @@
 import React from 'react'
 import TaskInput from './components/NewTaskForm/NewTaskForm'
 import TaskList from './components/TaskList/TaskList'
-import Footer from './components/Footer/Footer'
+import Footer from './components/Footer/Footer';
 import TaskFilter from './components/TasksFilter/TaskFilter';
 
 function App() {
