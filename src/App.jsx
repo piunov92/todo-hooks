@@ -4,20 +4,20 @@ import TaskList from './components/TaskList/TaskList'
 import Footer from './components/Footer/Footer'
 import TaskFilter from './components/TasksFilter/TaskFilter'
 
-const App = () => {
+function App() {
   const [data, setData] = React.useState([])
   const [todoCount, setTodoCount] = React.useState(0)
   const [filter, setFilter] = React.useState('All')
 
   const newTodo = (text) => {
-    const newTodo = {
+    const todo = {
       id: Math.random().toString(16).slice(2),
       isDone: false,
       date: new Date(),
       text,
     }
     setTodoCount(todoCount + 1)
-    setData([...data, newTodo])
+    setData([...data, todo])
   }
 
   const destroyTodo = (id, isDone) => {
@@ -32,7 +32,7 @@ const App = () => {
       data.map((todo) => ({
         ...todo,
         text: todo.id === id ? text : todo.text,
-      }))
+      })),
     )
   }
 
@@ -40,12 +40,13 @@ const App = () => {
     setData(
       data.map((todo) => {
         if (todo.id === id) {
+          // eslint-disable-next-line no-param-reassign
           todo.isDone = !todo.isDone
           if (todo.isDone) setTodoCount(todoCount - 1)
           else setTodoCount(todoCount + 1)
         }
         return todo
-      })
+      }),
     )
   }
 
@@ -57,33 +58,33 @@ const App = () => {
     })
   }
 
-  const filteredTodo = () => {
-    return data.filter(({ isDone }) => {
+  const filteredTodo = () =>
+    data.filter(({ isDone }) => {
       const all = filter === 'All'
       const completed = filter === 'Completed'
+      // eslint-disable-next-line no-nested-ternary
       return all ? true : completed ? isDone === true : isDone === false
     })
-  }
 
   const onChangeFilter = (filterStatus) => {
     setFilter(filterStatus)
   }
 
   return (
-    <section className="todoapp">
-      <header className="header">
+    <section className='todoapp'>
+      <header className='header'>
         <h1>todos</h1>
         <TaskInput
-          className={'new-todo'}
-          placeholder={'What needs to be done?'}
-          value={''}
+          className='new-todo'
+          placeholder='What needs to be done?'
+          value=''
           submit={(state, setState) => {
             newTodo(state)
             setState('')
           }}
         />
       </header>
-      <section className="main">
+      <section className='main'>
         <TaskList
           todos={filteredTodo()}
           taskDestroy={destroyTodo}

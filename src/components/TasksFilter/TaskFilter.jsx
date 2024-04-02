@@ -1,15 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import './TaskFilter.scss'
 
-const TaskFilter = ({ filter, onChangeFilter }) => {
-
+function TaskFilter({ filter, onChangeFilter }) {
   const checkFilter = (filterStatus) => filter === filterStatus
-  
+
   return (
-    <ul className="filters">
+    <ul className='filters'>
       <li>
         <button
+          type='button'
           className={checkFilter('All') ? 'selected' : null}
           onClick={() => onChangeFilter('All')}
         >
@@ -18,6 +19,7 @@ const TaskFilter = ({ filter, onChangeFilter }) => {
       </li>
       <li>
         <button
+          type='button'
           className={checkFilter('Active') ? 'selected' : null}
           onClick={() => onChangeFilter('Active')}
         >
@@ -26,6 +28,7 @@ const TaskFilter = ({ filter, onChangeFilter }) => {
       </li>
       <li>
         <button
+          type='button'
           className={checkFilter('Completed') ? 'selected' : null}
           onClick={() => onChangeFilter('Completed')}
         >
@@ -34,6 +37,15 @@ const TaskFilter = ({ filter, onChangeFilter }) => {
       </li>
     </ul>
   )
+}
+
+TaskFilter.propsTypes = {
+  filter: PropTypes.string,
+  onChangeFilter: PropTypes.func.isRequired,
+}
+
+TaskFilter.defaultProps = {
+  filter: 'All',
 }
 
 export default TaskFilter

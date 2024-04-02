@@ -32,7 +32,7 @@ TaskInput.propTypes = {
 }
 
 TaskInput.defaultTypes = {
-  placeholder: null
+  placeholder: null,
 }
 
 export default TaskInput

@@ -1,10 +1,10 @@
 import React from 'react'
-import Task from '../Task/Task'
 import PropTypes from 'prop-types'
+import Task from '../Task/Task'
 
 import './TaskList.scss'
 
-const TaskList = ({ todos, taskDestroy, taskEdit, taskDone }) => {
+function TaskList({ todos, taskDestroy, taskEdit, taskDone }) {
   const list = todos.map((todo) => (
     <Task
       key={todo.id}
@@ -17,16 +17,16 @@ const TaskList = ({ todos, taskDestroy, taskEdit, taskDone }) => {
     />
   ))
 
-  return <ul className="todo-list">{list}</ul>
+  return <ul className='todo-list'>{list}</ul>
 }
 
 TaskList.propsTypes = {
   todos: PropTypes.shape({
-      id: PropTypes.string,
-      isDone: PropTypes.bool,
-      date: PropTypes.instanceOf(Date),
-      text: PropTypes.string,
-  })
+    id: PropTypes.string,
+    isDone: PropTypes.bool,
+    date: PropTypes.instanceOf(Date),
+    text: PropTypes.string,
+  }),
 }
 
 export default TaskList
