@@ -1,10 +1,12 @@
 import React from 'react'
 import TaskInput from '../NewTaskForm/NewTaskForm'
 import { formatDistanceToNow } from 'date-fns'
+import PropTypes from 'prop-types'
 
 import './Task.scss'
 
 const Task = ({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) => {
+
   const [isEditing, setEdited] = React.useState(false)
 
   return (
@@ -44,6 +46,15 @@ const Task = ({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) => {
       )}
     </li>
   )
+}
+
+Task.propTypes = {
+  todoText: PropTypes.string,
+  date: PropTypes.instanceOf(Date),
+  taskDestroy: PropTypes.func,
+  taskEdit: PropTypes.func,
+  taskDone: PropTypes.func,
+  isDone: PropTypes.bool
 }
 
 export default Task

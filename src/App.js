@@ -20,8 +20,10 @@ const App = () => {
     setData([...data, newTodo])
   }
 
-  const destroyTodo = (id) => {
-    setTodoCount(todoCount - 1)
+  const destroyTodo = (id, isDone) => {
+    if (!isDone) {
+      setTodoCount(todoCount - 1)
+    }
     setData(data.filter((todo) => todo.id !== id))
   }
 
