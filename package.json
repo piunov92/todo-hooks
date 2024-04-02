@@ -24,9 +24,8 @@
   },
   "lint-staged": {
     "*.(js|jsx)": [
-      "yarn lint",
       "yarn format",
-      "git add"
+      "yarn lint"
     ]
   },
   "browserslist": {
