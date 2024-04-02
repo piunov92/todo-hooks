@@ -10,6 +10,13 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1"
   },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "format": "prettier --write ./src"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -17,13 +24,6 @@
   },
   "lint-staged": {
     "*.(js|jsx)": ["yarn lint:fix", "git add"]
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "format": "prettier --write ./src"
   },
   "browserslist": {
     "production": [
