@@ -18,9 +18,17 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
           checked={isDone}
           onChange={taskDone}
         />
-        <label htmlFor='task'>
+        <label htmlFor='view'>
           <span onChange={taskDone} className='description'>
             {todoText}
+          </span>
+          <span className='description description--timer'>
+            {/* <button className='icon icon-play' type='button'/> */}
+            <label htmlFor='play' className='icon icon-play'>
+              <input type='radio' id='play' />
+            </label>
+            {/* <button className='icon icon-pause' type='button' /> */}
+            {/* 12:55 */}
           </span>
           <span className='created'>
             {`created ${formatDistanceToNow(date, {
@@ -29,7 +37,19 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
             })}`}
           </span>
         </label>
-        <button
+        <div className='view__buttons'>
+          <button
+            className='icon icon-edit'
+            onClick={() => setEdited(true)}
+            type='button'
+          />
+          <button
+            className='icon icon-destroy'
+            onClick={taskDestroy}
+            type='button'
+          />
+        </div>
+        {/* <button
           className='icon icon-edit'
           onClick={() => setEdited(true)}
           type='button'
@@ -38,7 +58,7 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
           className='icon icon-destroy'
           onClick={taskDestroy}
           type='button'
-        />
+        /> */}
       </div>
       {isEditing && (
         <TaskInput

@@ -1,6 +1,5 @@
 .todo-list {
   li {
-    position: relative;
     font-size: 24px;
     border-bottom: 1px solid #ededed;
 
@@ -32,11 +31,8 @@
       text-align: center;
       width: 40px;
       /* auto, since non-WebKit browsers doesn't support input styling */
-      height: auto;
+      height: 100%;
       position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
       border: none; /* Mobile Safari */
       -webkit-appearance: none;
       appearance: none;
@@ -59,7 +55,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 85px 15px 60px;
+      padding: 8px 19px 8px 19px;
 
       .created {
         font-size: 13px;
@@ -73,6 +69,15 @@
         transition: color 0.4s;
         font-weight: 400;
         color: #4d4d4d;
+
+        &:first-child {
+          padding-left: 30px;
+          width: 200px;
+        }
+
+        &--timer {
+          font-size: small;
+        }
       }
     }
 
@@ -85,42 +90,64 @@
       }
     }
 
-    .icon {
-      position: absolute;
-      top: 0;
-      bottom: -3px;
-      width: 30px;
-      height: 40px;
-      font-size: 34px;
-      color: #cc9a9a;
-      margin: auto 0 11px;
-      transition: color 0.2s ease-out;
-      cursor: pointer;
-
-      &:hover {
-        color: #af5b5e;
-      }
-    }
-
-    .icon-destroy {
-      right: 10px;
-
-      &::after {
-        content: '×';
-      }
-    }
-
-    .icon-edit {
-      font-size: 19px;
-      right: 45px;
-
-      &::after {
-        content: '✎';
-      }
-    }
-
     .edit {
       display: none;
     }
+  }
+}
+
+.view {
+  display: flex;
+  position: relative;
+  &__buttons {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.icon {
+  padding: 10px;
+  font-size: 34px;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    color: #af5b5e;
+  }
+}
+
+.icon-play {
+  font-size: 15px;
+  text-decoration: none;
+  #play {
+    display: none;
+  }
+  &::after {
+    content: '▶';
+  }
+}
+
+.icon-pause {
+  font-size: 15px;
+  &::after {
+    content: '⏸';
+  }
+}
+
+.icon-destroy {
+  right: 10px;
+
+  &::after {
+    content: '×';
+  }
+}
+
+.icon-edit {
+  font-size: 19px;
+  right: 45px;
+
+  &::after {
+    content: '✎';
   }
 }
