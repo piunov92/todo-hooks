@@ -83,7 +83,7 @@
           text-wrap: nowrap;
           padding: 10px;
           text-decoration: none !important;
-          color: black !important; 
+          color: black !important;
         }
       }
     }
@@ -139,7 +139,7 @@
     content: '▷';
   }
 
-  #play:checked + &::after{
+  #play:checked + &::after {
     content: '▶';
   }
 }
