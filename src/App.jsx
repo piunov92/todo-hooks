@@ -1,13 +1,13 @@
-import React from 'react'
+import { useState } from 'react'
 import TaskInput from './components/NewTaskForm/NewTaskForm'
 import TaskList from './components/TaskList/TaskList'
 import Footer from './components/Footer/Footer'
 import TaskFilter from './components/TasksFilter/TaskFilter'
 
 function App() {
-  const [data, setData] = React.useState([])
-  const [todoCount, setTodoCount] = React.useState(0)
-  const [filter, setFilter] = React.useState('All')
+  const [data, setData] = useState([])
+  const [todoCount, setTodoCount] = useState(0)
+  const [filter, setFilter] = useState('All')
 
   const newTodo = (text) => {
     const todo = {

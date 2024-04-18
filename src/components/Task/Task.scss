@@ -51,11 +51,12 @@
         }
       }
     }
+
     label {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 19px 8px 19px;
+      padding: 8px;
 
       .created {
         font-size: 13px;
@@ -71,12 +72,18 @@
         color: #4d4d4d;
 
         &:first-child {
-          padding-left: 30px;
+          padding-left: 40px;
           width: 200px;
         }
 
         &--timer {
+          display: flex;
           font-size: small;
+          align-items: center;
+          text-wrap: nowrap;
+          padding: 10px;
+          text-decoration: none !important;
+          color: black !important; 
         }
       }
     }
@@ -117,21 +124,31 @@
   }
 }
 
+// #play {
+//   display: none;
+// }
+
+// #pause {
+//   display: none;
+// }
+
 .icon-play {
   font-size: 15px;
-  text-decoration: none;
-  #play {
-    display: none;
-  }
+
   &::after {
+    content: '▷';
+  }
+
+  #play:checked + &::after{
     content: '▶';
   }
 }
 
 .icon-pause {
   font-size: 15px;
+
   &::after {
-    content: '⏸';
+    content: '||';
   }
 }
 

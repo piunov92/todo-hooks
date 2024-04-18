@@ -1,13 +1,42 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { formatDistanceToNow } from 'date-fns'
 import PropTypes from 'prop-types'
 import TaskInput from '../NewTaskForm/NewTaskForm'
 
 import './Task.scss'
 
-function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
-  const [isEditing, setEdited] = React.useState(false)
+function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone, id }) {
+  const [isEditing, setEdited] = useState(false)
+  const [enabled, setEnabled] = useState(false)
+  const [timer, setTimer] = useState(0)
+  const timeoutId = useRef(null)
+
+  const handlerTimerEnabled = () => setEnabled(true)
+  const handlerTimerDisabled = () => setEnabled(false)
+
+  const currentTime = () =>
+    (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
+    new Date().getSeconds()
+
+  // const initialTimer = sessionStorage.getItem('timer') ?? 0
+  // const [timer, setTimer] = useState(
+  //   initialTimer ? currentTime() - initialTimer : initialTimer,
+  // )
+
+  useEffect(() => {
+    if (enabled) {
+      timeoutId.current = setTimeout(() => {
+        setTimer(timer + 1)
+        sessionStorage.setItem('timer', currentTime() - timer)
+      }, 1000)
+    }
+    return () => clearTimeout(timeoutId.current)
+  }, [timer, enabled])
+
+  const seconds = () => `0${timer % 60}`.slice(-2)
+  const minutes = () => Math.floor((timer / 60) % 60)
+  const hours = () => Math.floor((timer / 3600) % 24)
 
   return (
     <li className={isDone ? 'completed' : isEditing ? 'editing' : null}>
@@ -23,12 +52,26 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
             {todoText}
           </span>
           <span className='description description--timer'>
-            {/* <button className='icon icon-play' type='button'/> */}
-            <label htmlFor='play' className='icon icon-play'>
-              <input type='radio' id='play' />
+            <label htmlFor={`play_${id}`} className='icon icon-play'>
+              <input
+                type='radio'
+                name={`radio_${id}`}
+                id={`play_${id}`}
+                onChange={handlerTimerEnabled}
+              />
             </label>
-            {/* <button className='icon icon-pause' type='button' /> */}
-            {/* 12:55 */}
+
+            <label htmlFor={`pause_${id}`} className='icon icon-pause'>
+              <input
+                type='radio'
+                id={`pause_${id}`}
+                name={`radio_${id}`}
+                onChange={handlerTimerDisabled}
+              />
+            </label>
+            <span
+              style={{ padding: 10 }}
+            >{`${hours()}:${minutes()}:${seconds()}`}</span>
           </span>
           <span className='created'>
             {`created ${formatDistanceToNow(date, {
@@ -49,16 +92,6 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone }) {
             type='button'
           />
         </div>
-        {/* <button
-          className='icon icon-edit'
-          onClick={() => setEdited(true)}
-          type='button'
-        />
-        <button
-          className='icon icon-destroy'
-          onClick={taskDestroy}
-          type='button'
-        /> */}
       </div>
       {isEditing && (
         <TaskInput

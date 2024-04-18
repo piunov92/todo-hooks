@@ -8,6 +8,7 @@ function TaskList({ todos, taskDestroy, taskEdit, taskDone }) {
   const list = todos.map((todo) => (
     <Task
       key={todo.id}
+      id={todo.id}
       todoText={todo.text}
       taskDestroy={() => taskDestroy(todo.id, todo.isDone)}
       taskEdit={(text) => taskEdit(todo.id, text)}
