@@ -20,11 +20,12 @@ function Task({
 }) {
   const [isEditing, setEdited] = useState(false)
   const [enabled, setEnabled] = useState(isTimeUpdate)
-  // const timeNow = useRef(null)
-  // const currentTime = () =>
-  //   (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
-  //   new Date().getSeconds()
-  const [timer, setTimer] = useState(seconds)
+  const currentTime = () =>
+    (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
+    new Date().getSeconds()
+  const [timer, setTimer] = useState(
+    seconds ? currentTime() - seconds : seconds,
+  )
   const intervalId = useRef(null)
 
   const handleStart = () => {
@@ -41,14 +42,13 @@ function Task({
 
   useEffect(() => {
     if (!enabled && !isTimeUpdate) {
-      console.log(enabled, isTimeUpdate)
       return undefined
     }
     if (enabled) {
       intervalId.current = setInterval(() => {
         if (!isDone) {
           setTimer((t) => t + 1)
-          todoTimer(timer + 1, true)
+          todoTimer(currentTime() - (timer + 1), true)
         } else {
           setTimer(0)
           todoTimer(0, false)
@@ -56,7 +56,7 @@ function Task({
         }
       }, 1000)
     } else {
-      todoTimer(timer, false)
+      todoTimer(currentTime() - timer, false)
       return undefined
     }
     return () => {
