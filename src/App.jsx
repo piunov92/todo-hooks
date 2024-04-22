@@ -14,6 +14,7 @@ function App() {
       id: Math.random().toString(16).slice(2),
       isDone: false,
       seconds: 0,
+      isTimeUpdate: false,
       date: new Date(),
       text,
     }
@@ -37,11 +38,12 @@ function App() {
     )
   }
 
-  const todoTimer = (id, value) => {
+  const todoTimer = (id, value, isTime) => {
     setData(
       data.map((todo) => ({
         ...todo,
         seconds: todo.id === id ? value : todo.seconds,
+        isTimeUpdate: todo.id === id ? isTime : todo.isTimeUpdate,
       })),
     )
   }

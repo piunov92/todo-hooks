@@ -14,8 +14,9 @@ function TaskList({ todos, taskDestroy, taskEdit, taskDone, todoTimer }) {
       isDone={todo.isDone}
       taskDone={() => taskDone(todo.id)}
       date={todo.date}
-      todoTimer={(seconds) => todoTimer(todo.id, seconds)}
+      todoTimer={(seconds, isTime) => todoTimer(todo.id, seconds, isTime)}
       seconds={todo.seconds}
+      isTimeUpdate={todo.isTimeUpdate}
     />
   ))
 

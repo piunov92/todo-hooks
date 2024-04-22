@@ -16,9 +16,10 @@ function Task({
   id,
   todoTimer,
   seconds,
+  isTimeUpdate,
 }) {
   const [isEditing, setEdited] = useState(false)
-  const [enabled, setEnabled] = useState(false)
+  const [enabled, setEnabled] = useState(isTimeUpdate)
   // const timeNow = useRef(null)
   // const currentTime = () =>
   //   (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
@@ -39,23 +40,31 @@ function Task({
   }
 
   useEffect(() => {
-    if (!enabled) return undefined
-    intervalId.current = setInterval(() => {
-      if (!isDone) {
-        setTimer((t) => t + 1)
-        todoTimer(timer + 1)
-      } else {
-        setTimer(0)
-        todoTimer(0)
-        setEnabled((e) => !e)
-      }
-    }, 1000)
+    if (!enabled && !isTimeUpdate) {
+      console.log(enabled, isTimeUpdate)
+      return undefined
+    }
+    if (enabled) {
+      intervalId.current = setInterval(() => {
+        if (!isDone) {
+          setTimer((t) => t + 1)
+          todoTimer(timer + 1, true)
+        } else {
+          setTimer(0)
+          todoTimer(0, false)
+          setEnabled((e) => !e)
+        }
+      }, 1000)
+    } else {
+      todoTimer(timer, false)
+      return undefined
+    }
     return () => {
       if (intervalId.current) {
         clearInterval(intervalId.current)
       }
     }
-  }, [timer, enabled, seconds, todoTimer, isDone])
+  }, [timer, enabled, seconds, todoTimer, isDone, isTimeUpdate])
 
   const s = () => `0${timer % 60}`.slice(-2)
   const m = () => Math.floor((timer / 60) % 60)
