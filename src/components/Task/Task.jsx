@@ -19,7 +19,11 @@ function Task({
 }) {
   const [isEditing, setEdited] = useState(false)
   const [enabled, setEnabled] = useState(false)
-  const [timer, setTimer] = useState(seconds ?? 0)
+  // const timeNow = useRef(null)
+  // const currentTime = () =>
+  //   (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
+  //   new Date().getSeconds()
+  const [timer, setTimer] = useState(seconds)
   const intervalId = useRef(null)
 
   const handleStart = () => {
@@ -53,13 +57,9 @@ function Task({
     }
   }, [timer, enabled, seconds, todoTimer, isDone])
 
-  // const currentTime = () =>
-  //   (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
-  //   new Date().getSeconds()
-
-  // const seconds = () => `0${timer % 60}`.slice(-2)
-  // const minutes = () => Math.floor((timer / 60) % 60)
-  // const hours = () => Math.floor((timer / 3600) % 24)
+  const s = () => `0${timer % 60}`.slice(-2)
+  const m = () => Math.floor((timer / 60) % 60)
+  const h = () => Math.floor((timer / 3600) % 24)
 
   return (
     <li className={isDone ? 'completed' : isEditing ? 'editing' : null}>
@@ -92,10 +92,7 @@ function Task({
                 onChange={handlePause}
               />
             </label>
-            {/* <span
-              style={{ padding: 10 }}
-            >{`${hours()}:${minutes()}:${seconds()}`}</span> */}
-            <span style={{ padding: 10 }}>{timer}</span>
+            <span style={{ padding: 10 }}>{`${h()}:${m()}:${s()}`}</span>
           </span>
           <span className='created'>
             {`created ${formatDistanceToNow(date, {

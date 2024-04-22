@@ -13,7 +13,7 @@ function App() {
     const todo = {
       id: Math.random().toString(16).slice(2),
       isDone: false,
-      seconds: null,
+      seconds: 0,
       date: new Date(),
       text,
     }

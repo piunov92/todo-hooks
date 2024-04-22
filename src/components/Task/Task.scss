@@ -124,28 +124,26 @@
   }
 }
 
-// #play {
-//   display: none;
-// }
-
-// #pause {
-//   display: none;
-// }
-
 .icon-play {
   font-size: 15px;
+  input {
+    display: none;
+  }
 
   &::after {
     content: '▷';
   }
 
-  #play:checked + &::after {
+  input:checked + &::after {
     content: '▶';
   }
 }
 
 .icon-pause {
   font-size: 15px;
+  input {
+    display: none;
+  }
 
   &::after {
     content: '||';
