@@ -6,37 +6,60 @@ import TaskInput from '../NewTaskForm/NewTaskForm'
 
 import './Task.scss'
 
-function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone, id }) {
+function Task({
+  todoText,
+  date,
+  taskDestroy,
+  taskEdit,
+  taskDone,
+  isDone,
+  id,
+  todoTimer,
+  seconds,
+}) {
   const [isEditing, setEdited] = useState(false)
   const [enabled, setEnabled] = useState(false)
-  const [timer, setTimer] = useState(0)
-  const timeoutId = useRef(null)
+  const [timer, setTimer] = useState(seconds ?? 0)
+  const intervalId = useRef(null)
 
-  const handlerTimerEnabled = () => setEnabled(true)
-  const handlerTimerDisabled = () => setEnabled(false)
+  const handleStart = () => {
+    if (!enabled) {
+      setEnabled((e) => !e)
+    }
+  }
 
-  const currentTime = () =>
-    (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
-    new Date().getSeconds()
-
-  // const initialTimer = sessionStorage.getItem('timer') ?? 0
-  // const [timer, setTimer] = useState(
-  //   initialTimer ? currentTime() - initialTimer : initialTimer,
-  // )
+  const handlePause = () => {
+    if (enabled) {
+      setEnabled((e) => !e)
+    }
+  }
 
   useEffect(() => {
-    if (enabled) {
-      timeoutId.current = setTimeout(() => {
-        setTimer(timer + 1)
-        sessionStorage.setItem('timer', currentTime() - timer)
-      }, 1000)
+    if (!enabled) return undefined
+    intervalId.current = setInterval(() => {
+      if (!isDone) {
+        setTimer((t) => t + 1)
+        todoTimer(timer + 1)
+      } else {
+        setTimer(0)
+        todoTimer(0)
+        setEnabled((e) => !e)
+      }
+    }, 1000)
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current)
+      }
     }
-    return () => clearTimeout(timeoutId.current)
-  }, [timer, enabled])
+  }, [timer, enabled, seconds, todoTimer, isDone])
 
-  const seconds = () => `0${timer % 60}`.slice(-2)
-  const minutes = () => Math.floor((timer / 60) % 60)
-  const hours = () => Math.floor((timer / 3600) % 24)
+  // const currentTime = () =>
+  //   (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
+  //   new Date().getSeconds()
+
+  // const seconds = () => `0${timer % 60}`.slice(-2)
+  // const minutes = () => Math.floor((timer / 60) % 60)
+  // const hours = () => Math.floor((timer / 3600) % 24)
 
   return (
     <li className={isDone ? 'completed' : isEditing ? 'editing' : null}>
@@ -57,7 +80,7 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone, id }) {
                 type='radio'
                 name={`radio_${id}`}
                 id={`play_${id}`}
-                onChange={handlerTimerEnabled}
+                onChange={handleStart}
               />
             </label>
 
@@ -66,12 +89,13 @@ function Task({ todoText, date, taskDestroy, taskEdit, taskDone, isDone, id }) {
                 type='radio'
                 id={`pause_${id}`}
                 name={`radio_${id}`}
-                onChange={handlerTimerDisabled}
+                onChange={handlePause}
               />
             </label>
-            <span
+            {/* <span
               style={{ padding: 10 }}
-            >{`${hours()}:${minutes()}:${seconds()}`}</span>
+            >{`${hours()}:${minutes()}:${seconds()}`}</span> */}
+            <span style={{ padding: 10 }}>{timer}</span>
           </span>
           <span className='created'>
             {`created ${formatDistanceToNow(date, {

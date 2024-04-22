@@ -13,6 +13,7 @@ function App() {
     const todo = {
       id: Math.random().toString(16).slice(2),
       isDone: false,
+      seconds: null,
       date: new Date(),
       text,
     }
@@ -32,6 +33,15 @@ function App() {
       data.map((todo) => ({
         ...todo,
         text: todo.id === id ? text : todo.text,
+      })),
+    )
+  }
+
+  const todoTimer = (id, value) => {
+    setData(
+      data.map((todo) => ({
+        ...todo,
+        seconds: todo.id === id ? value : todo.seconds,
       })),
     )
   }
@@ -90,6 +100,7 @@ function App() {
           taskDestroy={destroyTodo}
           taskEdit={editTodo}
           taskDone={doneTodo}
+          todoTimer={todoTimer}
         />
         <Footer counter={todoCount} clearDone={clearDone}>
           <TaskFilter filter={filter} onChangeFilter={onChangeFilter} />

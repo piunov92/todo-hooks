@@ -1,10 +1,9 @@
-// import React from 'react'
 import PropTypes from 'prop-types'
 import Task from '../Task/Task'
 
 import './TaskList.scss'
 
-function TaskList({ todos, taskDestroy, taskEdit, taskDone }) {
+function TaskList({ todos, taskDestroy, taskEdit, taskDone, todoTimer }) {
   const list = todos.map((todo) => (
     <Task
       key={todo.id}
@@ -15,6 +14,8 @@ function TaskList({ todos, taskDestroy, taskEdit, taskDone }) {
       isDone={todo.isDone}
       taskDone={() => taskDone(todo.id)}
       date={todo.date}
+      todoTimer={(seconds) => todoTimer(todo.id, seconds)}
+      seconds={todo.seconds}
     />
   ))
 
