@@ -3,7 +3,15 @@ import Task from '../Task/Task'
 
 import './TaskList.scss'
 
-function TaskList({ todos, taskDestroy, taskEdit, taskDone, todoTimer }) {
+function TaskList({
+  todos,
+  taskDestroy,
+  taskEdit,
+  editTodoStatus,
+  taskDone,
+  todoTimer,
+  time,
+}) {
   const list = todos.map((todo) => (
     <Task
       key={todo.id}
@@ -11,12 +19,14 @@ function TaskList({ todos, taskDestroy, taskEdit, taskDone, todoTimer }) {
       todoText={todo.text}
       taskDestroy={() => taskDestroy(todo.id, todo.isDone)}
       taskEdit={(text) => taskEdit(todo.id, text)}
+      editTodoStatus={(isEditing) => editTodoStatus(isEditing)}
       isDone={todo.isDone}
       taskDone={() => taskDone(todo.id)}
       date={todo.date}
       todoTimer={(seconds, isTime) => todoTimer(todo.id, seconds, isTime)}
       seconds={todo.seconds}
       isTimeUpdate={todo.isTimeUpdate}
+      time={time}
     />
   ))
 

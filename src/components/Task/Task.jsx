@@ -11,20 +11,27 @@ function Task({
   date,
   taskDestroy,
   taskEdit,
+  editTodoStatus,
   taskDone,
   isDone,
   id,
   todoTimer,
   seconds,
   isTimeUpdate,
+  time,
 }) {
   const [isEditing, setEdited] = useState(false)
   const [enabled, setEnabled] = useState(isTimeUpdate)
   const currentTime = () =>
     (new Date().getHours() * 60 + new Date().getMinutes()) * 60 +
     new Date().getSeconds()
+  const { min, sec } = time
   const [timer, setTimer] = useState(
-    seconds ? currentTime() - seconds : seconds,
+    min + sec && !isTimeUpdate
+      ? min + sec
+      : seconds
+        ? currentTime() - seconds
+        : seconds,
   )
   const intervalId = useRef(null)
 
@@ -47,8 +54,15 @@ function Task({
     if (enabled) {
       intervalId.current = setInterval(() => {
         if (!isDone) {
-          setTimer((t) => t + 1)
-          todoTimer(currentTime() - (timer + 1), true)
+          if (min + sec && !isTimeUpdate && timer) {
+            if (timer === 1) {
+              taskDone()
+            }
+            setTimer((td) => td - 1)
+          } else {
+            setTimer((t) => t + 1)
+            todoTimer(currentTime() - timer, true)
+          }
         } else {
           setTimer(0)
           todoTimer(0, false)
@@ -64,7 +78,17 @@ function Task({
         clearInterval(intervalId.current)
       }
     }
-  }, [timer, enabled, seconds, todoTimer, isDone, isTimeUpdate])
+  }, [
+    timer,
+    enabled,
+    seconds,
+    todoTimer,
+    isDone,
+    isTimeUpdate,
+    min,
+    sec,
+    taskDone,
+  ])
 
   const s = () => `0${timer % 60}`.slice(-2)
   const m = () => Math.floor((timer / 60) % 60)
@@ -113,7 +137,10 @@ function Task({
         <div className='view__buttons'>
           <button
             className='icon icon-edit'
-            onClick={() => setEdited(true)}
+            onClick={() => {
+              setEdited(true)
+              editTodoStatus(isEditing)
+            }}
             type='button'
           />
           <button

@@ -131,10 +131,6 @@
   }
 
   &::after {
-    content: '▷';
-  }
-
-  input:checked + &::after {
     content: '▶';
   }
 }
@@ -146,7 +142,7 @@
   }
 
   &::after {
-    content: '||';
+    content: '⏸';
   }
 }
 

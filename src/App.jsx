@@ -8,6 +8,10 @@ function App() {
   const [data, setData] = useState([])
   const [todoCount, setTodoCount] = useState(0)
   const [filter, setFilter] = useState('All')
+  const [time, setTime] = useState({
+    min: 0,
+    sec: 0,
+  })
 
   const newTodo = (text) => {
     const todo = {
@@ -37,6 +41,8 @@ function App() {
       })),
     )
   }
+
+  const editTodoStatus = (isEditing) => isEditing
 
   const todoTimer = (id, value, isTime) => {
     setData(
@@ -94,6 +100,8 @@ function App() {
             newTodo(state)
             setState('')
           }}
+          setTime={setTime}
+          editTodoStatus={editTodoStatus}
         />
       </header>
       <section className='main'>
@@ -101,8 +109,10 @@ function App() {
           todos={filteredTodo()}
           taskDestroy={destroyTodo}
           taskEdit={editTodo}
+          editTodoStatus={editTodoStatus}
           taskDone={doneTodo}
           todoTimer={todoTimer}
+          time={time}
         />
         <Footer counter={todoCount} clearDone={clearDone}>
           <TaskFilter filter={filter} onChangeFilter={onChangeFilter} />
