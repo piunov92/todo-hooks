@@ -22,8 +22,12 @@ function App() {
       date: new Date(),
       text,
     }
-    setTodoCount(todoCount + 1)
-    setData([...data, todo])
+    if (text) {
+      setData([...data, todo])
+      setTodoCount(todoCount + 1)
+    } else {
+      setData([...data])
+    }
   }
 
   const destroyTodo = (id, isDone) => {

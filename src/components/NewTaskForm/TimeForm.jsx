@@ -1,9 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './TimeForm.scss'
 
-function TimeForm({ className, setTime }) {
+function TimeForm({ className, setTime, isSubmitTaskInput }) {
   const [minutes, setMinutes] = useState('')
   const [seconds, setSeconds] = useState('')
+
+  console.log(isSubmitTaskInput)
+
+  useEffect(() => {
+    if (isSubmitTaskInput) {
+      setMinutes('')
+      setSeconds('')
+      setTime((t) => ({ ...t, min: 0 }))
+      setTime((t) => ({ ...t, sec: 0 }))
+    }
+  }, [isSubmitTaskInput, setTime])
 
   const handleMin = (e) => {
     setMinutes(e.target.value)

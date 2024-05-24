@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
@@ -13,14 +14,20 @@ function TaskInput({
   editTodoStatus,
 }) {
   const [fieldValue, setFieldValue] = useState(value)
+  const [isSubmitTaskInput, setIsSubmitTaskInput] = useState(false)
 
   return (
     <>
       <form
         className='header-form'
-        onSubmit={(e) => {
-          e.preventDefault()
-          submit(fieldValue, setFieldValue)
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            submit(fieldValue, setFieldValue)
+            setIsSubmitTaskInput(true)
+          } else {
+            setIsSubmitTaskInput(false)
+          }
         }}
       >
         <input
@@ -29,10 +36,18 @@ function TaskInput({
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           value={fieldValue}
-          onChange={(e) => setFieldValue(e.target.value)}
+          onChange={(e) => {
+            setFieldValue(e.target.value)
+          }}
         />
       </form>
-      {editTodoStatus && <TimeForm className={className} setTime={setTime} />}
+      {editTodoStatus && (
+        <TimeForm
+          className={className}
+          setTime={setTime}
+          isSubmitTaskInput={isSubmitTaskInput}
+        />
+      )}
     </>
   )
 }
